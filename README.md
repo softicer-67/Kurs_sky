@@ -7,6 +7,6 @@
   4. docker-compose up --build
   
   Django
-  http://127.0.0.1:8000/admin
-  user admin
-  password 123
+    http://127.0.0.1:8000/admin
+    user admin
+    password 123
