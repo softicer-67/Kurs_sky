@@ -1,0 +1,91 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container">
+
+        <div class="collapse navbar-collapse" id="navbarButtonsExample">
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <p style="font-family: 'Dancing Script', cursive; font-size: 40px; font-weight: bolder;">
+                        File Check</p>
+                </li>
+            </ul>
+            <div class="d-flex align-items-center">
+                <a href="{% url 'core:add_file_view' %}"
+                   class="btn btn-success me-5">Add New File</a>
+
+                <span class="me-3" style="font-size: 20px;"><i
+                        class="bi bi-person me-1"
+                        style="font-size:20px;"></i>{{ user.username }}</span>
+
+                <a href="{% url 'authentication:signout_view' %}"
+                   class="btn btn-outline-danger">Sign Out</a>
+
+            </div>
+        </div>
+    </div>
+</nav>
+
+<p class="text-center h2 fw-bold mb-3 mx-1 mx-md-4 mt-4">List Files</p>
+
+<div class="row d-flex justify-content-center align-items-center h-100 mt-3">
+    <div class="col-lg-10 col-xl-10">
+        <div class="card text-black" style="border-radius: 25px;">
+
+            <div class="card-body p-md-5">
+                <div class="row justify-content-center">
+
+                    <table class="table table-striped align-middle mb-0 bg-white">
+                        <thead class="bg-light">
+                        <tr>
+                            <th>File</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th>Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for row in object_list %}
+                        <tr>
+                            <td>
+                                {{ row.file.name }}
+                            </td>
+                            <td>
+                                {% if row.get_status_display == "new" %}
+                                    <span class="badge bg-info">{{ row.get_status_display }}</span>
+                                {% elif row.get_status_display == "updated" %}
+                                    <span class="badge bg-warning">{{ row.get_status_display }}</span>
+                                {% elif row.get_status_display == "verified" %}
+                                    <span class="badge bg-success">{{ row.get_status_display }}</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {{ row.created_at }}
+                            </td>
+                            <td>
+                                {{ row.updated_at }}
+                            </td>
+                            <td>
+                                <a href="{% url 'core:detail_file_view' row.id %}"
+                                   class="btn btn-info btn-xs">Logs Info</a>
+                                <a href="{% url 'core:update_file_view' row.id %}"
+                                   class="btn btn-warning btn-xs">Edit</a>
+                                <a href="{% url 'core:delete_file_view' row.id %}"
+                                   class="btn btn-danger btn-xs">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

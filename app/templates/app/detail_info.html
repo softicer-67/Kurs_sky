@@ -1,0 +1,68 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<main role="main" class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <form class="form-signin" method="post">
+                            {% csrf_token %}
+                            <h3 class="h3 mb-3 font-weight-normal">Логи</h3>
+                            {% if object %}
+                                    <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                                        {{ file.file }}</p>
+                                    <p class="text h4">Result:</p>
+                                    <br>
+                                    <p class="text h5">
+                                        {{ file.logs }}</p>
+                                    <br>
+                                    {% if file.send_mail %}
+                                    <h3><span class="badge bg-success">Message sent</span></h3>
+                                    {% else %}
+                                    <h3><span class="badge bg-warning">Message not sent</span></h3>
+                                    {% endif %}
+                                {% else %}
+                                    <p>There is no information about verification.</p>
+                                    <p>Waiting for result . . .</p>
+                                {% endif %}
+
+                                <hr>
+                                <a class="btn btn-outline-dark"
+                                       href="{% url 'home' %}">Back</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
+
+
+
+                                {% if object %}
+                                    <p class="text-center h3 fw-bold mb-5 mx-1 mx-md-4 mt-4">
+                                        {{ file.file }}</p>
+                                    <p class="text h4">Result:</p>
+                                    <br>
+                                    <p class="text h5">
+                                        {{ file.logs }}</p>
+                                    <br>
+                                    {% if file.send_mail %}
+                                    <h3><span class="badge bg-success">Message sent</span></h3>
+                                    {% else %}
+                                    <h3><span class="badge bg-warning">Message not sent</span></h3>
+                                    {% endif %}
+                                {% else %}
+                                    <p class="text-center h5 fw-bold mb-5 mx-1 mx-md-4 mt-4 text-warning">
+                                        There is no information about verification.</p>
+                                    <p class="text-center h5 fw-bold mb-5 mx-1 mx-md-4 mt-4 text-warning">
+                                        Waiting for result . . .</p>
+                                {% endif %}
+
+                                <hr>
+                                <a class="btn btn-outline-dark"
+                                       href="{% url 'home' %}">Back</a>

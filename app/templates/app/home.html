@@ -1,0 +1,56 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<main role="main" class="container">
+    <div class="jumbotron">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Список файлов</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <td class="alert-danger">Файл</td>
+                                <td class="alert-danger">Статус</td>
+                                <td class="alert-danger">Дата создания</td>
+                                <td class="alert-danger">Логи</td>
+                            </tr>
+                            {% for file in my_files %}
+                            <tr>
+                                <td>{{file.file}}</td>
+                                <td>{{file.status}}</td>
+                                <td>{{file.created_at|date:"Y-m-d"}}</td>
+                                <td>
+                                    <form class="form-signin" method="post" enctype="multipart/form-data">
+                                        <a href="detail_file/{{file.id}}" class="btn btn-light btn-xs"
+                                           onclick="return confirm('read logs ?')">Открыть</a>
+                                    </form>
+                                </td>
+                                <td>
+                                    <form class="form-signin" method="post" enctype="multipart/form-data">
+                                        {% csrf_token %}
+                                        <a href="delete/{{file.id}}" class="btn btn-danger btn-xs"
+                                           onclick="return confirm('Are you sure you want to delete?')">Delete</a>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                        <form action="add_file/{{file.id}}" class="form-signin" method="post"
+                              enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div>
+                                <input class="form-control form-control-lg" type="file" name="file" required
+                                       id="id_file">
+                            </div>
+                            <p><input type="submit" value="Загрузить"></p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
